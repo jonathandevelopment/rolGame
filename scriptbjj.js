@@ -39,24 +39,24 @@ const monsters = [
     health: 300
   }
 ]
-const locations = [
+const actions = [
   {
     name: "town square",
-    "button text": ["Go to store", "Go to cave", "Fight dragon"],
+    "button text": ["Tienda", "Ir a la academia", "Fight dragon"],
     "button functions": [goStore, goCave, fightDragon],
-    text: "You are in the town square. You see a sign that says \"Store\"."
+    text: "Estás en el centro de tu ciudad"
   },
   {
     name: "store",
-    "button text": ["Buy 10 health (10 gold)", "Buy weapon (30 gold)", "Go to town square"],
+    "button text": ["Incrementar 10 salud ($10)", "Buy weapon (30 gold)", "Ir al pueblo"],
     "button functions": [buyHealth, buyWeapon, goTown],
-    text: "You enter the store."
+    text: "Estás en la Tienda"
   },
   {
     name: "cave",
-    "button text": ["Fight slime", "Fight fanged beast", "Go to town square"],
+    "button text": ["Rollar con cinturon blanco", "Rollar con cinturon azul", "Ir al pueblo"],
     "button functions": [fightSlime, fightBeast, goTown],
-    text: "You enter the cave. You see some monsters."
+    text: "Estás en la academia. Los roles van a empezar. Seleciona tu compañero."
   },
   {
     name: "fight",
@@ -66,7 +66,7 @@ const locations = [
   },
   {
     name: "kill monster",
-    "button text": ["Go to town square", "Go to town square", "easterEgg"],
+    "button text": ["Ir al pueblo", "Ir al pueblo", "easterEgg"],
     "button functions": [goTown, goTown, easterEgg],
     text: 'The monster screams "Arg!" as it dies. You gain experience points and find gold.'
   },
@@ -84,7 +84,7 @@ const locations = [
   },
   {
     name: "easter egg",
-    "button text": ["2", "8", "Go to town square?"],
+    "button text": ["2", "8", "Ir al pueblo?"],
     "button functions": [pickTwo, pickEight, goTown],
     text: "You find a secret game. Pick a number above. Ten numbers will be randomly chosen between 0 and 10. If the number you choose matches one of the random numbers, you win!"
   }
@@ -107,15 +107,15 @@ function update(location) {
 }
 
 function goTown() {
-  update(locations[0]);
+  update(actions[0]);
 }
 
 function goStore() {
-  update(locations[1]);
+  update(actions[1]);
 }
 
 function goCave() {
-  update(locations[2]);
+  update(actions[2]);
 }
 
 function buyHealth() {
@@ -125,7 +125,7 @@ function buyHealth() {
     goldText.innerText = gold;
     healthText.innerText = health;
   } else {
-    text.innerText = "You do not have enough gold to buy health.";
+    text.innerText = "$ insuficiente.";
   }
 }
 
@@ -177,7 +177,7 @@ function fightDragon() {
 }
 
 function goFight() {
-  update(locations[3]);
+  update(actions[3]);
   monsterHealth = monsters[fighting].health;
   monsterStats.style.display = "block";
   monsterName.innerText = monsters[fighting].name;
@@ -229,15 +229,15 @@ function defeatMonster() {
   xp += monsters[fighting].level;
   goldText.innerText = gold;
   xpText.innerText = xp;
-  update(locations[4]);
+  update(actions[4]);
 }
 
 function lose() {
-  update(locations[5]);
+  update(actions[5]);
 }
 
 function winGame() {
-  update(locations[6]);
+  update(actions[6]);
 }
 
 function restart() {
@@ -253,7 +253,7 @@ function restart() {
 }
 
 function easterEgg() {
-  update(locations[7]);
+  update(actions[7]);
 }
 
 function pickTwo() {
