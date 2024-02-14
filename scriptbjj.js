@@ -24,12 +24,12 @@ const weapons = [
 ];
 const monsters = [
   {
-    name: "slime",
+    name: "Soto",
     level: 2,
     health: 15
   },
   {
-    name: "fanged beast",
+    name: "Brayan",
     level: 8,
     health: 60
   },
@@ -60,9 +60,9 @@ const actions = [
   },
   {
     name: "fight",
-    "button text": ["Attack", "Dodge", "Run"],
+    "button text": ["Atacar", "Meter en Guardia", "Tap out"],
     "button functions": [attack, dodge, goTown],
-    text: "You are fighting a monster."
+    text: "Estas luchando con tu compañero"
   },
   {
     name: "kill monster",
