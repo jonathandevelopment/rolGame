@@ -5,6 +5,10 @@ let currentWeapon = 0;
 let fighting;
 let monsterHealth;
 let inventory = ["stick"];
+let stripes = 0;
+let belt = "Blanco";
+let belts = ["Blanco", "Azul", "Morado", "Marrón", "Negro"];
+let beltCounter = 0;
 
 const button1 = document.querySelector('#button1');
 const button2 = document.querySelector("#button2");
@@ -16,6 +20,8 @@ const goldText = document.querySelector("#goldText");
 const monsterStats = document.querySelector("#monsterStats");
 const monsterName = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
+const stripesText = document.querySelector("#stripesText");
+const beltText = document.querySelector("#beltText");
 const weapons = [
   { name: 'stick', power: 5 },
   { name: 'dagger', power: 30 },
@@ -26,17 +32,20 @@ const monsters = [
   {
     name: "Soto",
     level: 2,
-    health: 15
+    health: 15,
+    belt: "Blanco"
   },
   {
     name: "Brayan",
     level: 8,
-    health: 60
+    health: 60,
+    belt: "Azul"
   },
   {
     name: "dragon",
     level: 20,
-    health: 300
+    health: 300,
+    belt: "Negro"
   }
 ]
 const actions = [
@@ -68,7 +77,7 @@ const actions = [
     name: "kill monster",
     "button text": ["Ir al pueblo", "Ir al pueblo", "easterEgg"],
     "button functions": [goTown, goTown, easterEgg],
-    text: 'The monster screams "Arg!" as it dies. You gain experience points and find gold.'
+    text: 'Felicidades has ganado el combate. Ganaste experiencia y un bonus $$$.'
   },
   {
     name: "lose",
@@ -95,15 +104,15 @@ button1.onclick = goStore;
 button2.onclick = goCave;
 button3.onclick = fightDragon;
 
-function update(location) {
+function update(action) {
   monsterStats.style.display = "none";
-  button1.innerText = location["button text"][0];
-  button2.innerText = location["button text"][1];
-  button3.innerText = location["button text"][2];
-  button1.onclick = location["button functions"][0];
-  button2.onclick = location["button functions"][1];
-  button3.onclick = location["button functions"][2];
-  text.innerHTML = location.text;
+  button1.innerText = action["button text"][0];
+  button2.innerText = action["button text"][1];
+  button3.innerText = action["button text"][2];
+  button1.onclick = action["button functions"][0];
+  button2.onclick = action["button functions"][1];
+  button3.onclick = action["button functions"][2];
+  text.innerHTML = action.text;
 }
 
 function goTown() {
@@ -204,6 +213,7 @@ function attack() {
       defeatMonster();
     }
   }
+  
   if (Math.random() <= .1 && inventory.length !== 1) {
     text.innerText += " Your " + inventory.pop() + " breaks.";
     currentWeapon--;
@@ -229,7 +239,9 @@ function defeatMonster() {
   xp += monsters[fighting].level;
   goldText.innerText = gold;
   xpText.innerText = xp;
+
   update(actions[4]);
+  updateLevel();
 }
 
 function lose() {
@@ -286,3 +298,25 @@ function pick(guess) {
     }
   }
 }
+
+const updateLevel = () => {
+  const remainingStripes = xp % 8; // Calculate the remaining stripes after promotion
+  stripes = Math.floor(remainingStripes / 2); // Adjust stripes based on remaining stripes
+  stripesText.innerText = stripes;
+
+  if (stripes === 0 && xp >= 8) { // Check if the player has obtained a total of 4 stripes and has enough XP
+    beltCounter++;
+    if (beltCounter < belts.length) { // Check if there are more belt colors available
+      beltText.innerText = belts[beltCounter];
+      stripes = 0; // Reset stripes to 0 when promoted to a new belt
+      stripesText.innerText = stripes;
+    } else {
+      // Handle case where player has reached the maximum belt color
+      // For example, you can display a message indicating the player has reached the maximum level
+      beltText.innerText = "Maximum level reached";
+    }
+  }
+}
+
+
+
