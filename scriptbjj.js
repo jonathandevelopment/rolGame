@@ -38,7 +38,7 @@ const monsters = [
   {
     name: "Brayan",
     level: 8,
-    health: 60,
+    health: 25,
     belt: "Azul"
   },
   {
@@ -300,12 +300,14 @@ function pick(guess) {
 }
 
 const updateLevel = () => {
-  const remainingStripes = xp % 8; // Calculate the remaining stripes after promotion
-  stripes = Math.floor(remainingStripes / 2); // Adjust stripes based on remaining stripes
+  const remainingStripes = xp % 16; // Calculate the remaining stripes after promotion
+  stripes = Math.floor(remainingStripes / 4); // Adjust stripes based on remaining stripes
   stripesText.innerText = stripes;
 
-  if (stripes === 0 && xp >= 8) { // Check if the player has obtained a total of 4 stripes and has enough XP
-    beltCounter++;
+  if (stripes === 0 && xp >= 16) { // Check if the player has obtained a total of 4 stripes and has enough XP
+    const remainingBelts = Math.floor(xp / 16); // Calculate the remaining belts after promotion
+    beltCounter = remainingBelts; // Adjust belt counter based on remaining belts
+
     if (beltCounter < belts.length) { // Check if there are more belt colors available
       beltText.innerText = belts[beltCounter];
       stripes = 0; // Reset stripes to 0 when promoted to a new belt
@@ -317,6 +319,7 @@ const updateLevel = () => {
     }
   }
 }
+
 
 
 
